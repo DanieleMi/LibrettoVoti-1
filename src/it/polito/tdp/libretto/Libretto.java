@@ -15,9 +15,16 @@ public class Libretto {
 	 * Aggiunge un nuovo voto al libretto
 	 * 
 	 * @param v il {@link Voto} da aggiungere
+	 * @return {@code true} nel caso normale, {@code false} se non è riuscito ad
+	 *         aggiungere il voto
 	 */
-	public void add(Voto v) {
-		voti.add(v);
+	public boolean add(Voto v) {
+		if (!this.esisteGiaVoto(v) && !this.votoConflitto(v)) {
+			voti.add(v);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -44,12 +51,12 @@ public class Libretto {
 	 * @return il {@link Voto} corrispondente, oppure {@code null} se non esistente
 	 */
 	public Voto cercaEsame(String nomeEsame) {
-		Voto voto = new Voto(0, nomeEsame, null) ;
-		int pos = this.voti.indexOf(voto) ;
-		if(pos==-1)
+		Voto voto = new Voto(0, nomeEsame, null);
+		int pos = this.voti.indexOf(voto);
+		if (pos == -1)
 			return null;
 		else
-			return this.voti.get(pos) ;
+			return this.voti.get(pos);
 	}
 
 	/**
@@ -62,11 +69,32 @@ public class Libretto {
 	 *         voto diverso
 	 */
 	public boolean esisteGiaVoto(Voto v) {
-		int pos = this.voti.indexOf(v) ;
-		if (pos==-1) 
-			return false ;
-		else 
-			return ( v.getPunti() == this.voti.get(pos).getPunti() ) ;		
+		int pos = this.voti.indexOf(v);
+		if (pos == -1)
+			return false;
+		else
+			return (v.getPunti() == this.voti.get(pos).getPunti());
 	}
 
+	/**
+	 * Mi dice se il {@link Voto} {@code v} è in conflitto con uno dei voti
+	 * esistenti. Se il voto non esiste, non c'è conflitto. Se esiste ed ha
+	 * punteggio diverso, c'è conflitto.
+	 * 
+	 * @param v
+	 * @return {@code true} se il voto esiste ed ha un punteggio diverso,
+	 *         {@code false} se il voto non esiste, oppure esiste ma ha lo stesso
+	 *         punteggio
+	 */
+	public boolean votoConflitto(Voto v) {
+		int pos = this.voti.indexOf(v);
+		if (pos == -1)
+			return false;
+		else
+			return (v.getPunti() != this.voti.get(pos).getPunti());
+	}
+
+	public String toString() {
+		return this.voti.toString() ;
+	}
 }
