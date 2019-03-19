@@ -97,4 +97,40 @@ public class Libretto {
 	public String toString() {
 		return this.voti.toString() ;
 	}
+	
+	/**
+	 * Crea un <i>clone</i> di un libretto, e "migliora" i punteggi di +1 o +2 punti.
+	 * @return un nuovo libretto, con gli stessi esami ma i voti migliorati
+	 */
+	public Libretto librettoMigliorato() {
+		Libretto nuovo = new Libretto() ;
+		for(Voto v: this.voti) {
+			nuovo.add(v.clone()) ;
+		}
+		for(Voto v: nuovo.voti) {
+			int punti = v.getPunti() ;
+			if (punti<24) 
+				punti = punti + 1 ;
+			else if (punti <=28)
+				punti = punti + 2 ;
+			v.setPunti(punti);
+		}
+		return nuovo ;
+	}
+	
+	/**
+	 * Elimina i voti inferiori a 24 dal libretto
+	 */
+	public void cancellaVotiScarsi() {
+		List<Voto> cancellare = new ArrayList<Voto>() ;
+		for(Voto v: this.voti) {
+			if(v.getPunti()<24) {
+				cancellare.add(v) ;
+			}
+		}
+		
+		// nota: non è possibile cancellare un voto dall'interno del ciclo for
+		// perché non si può modificare una Collection mentre si itera sulla stessa
+		this.voti.removeAll(cancellare) ;
+	}
 }
