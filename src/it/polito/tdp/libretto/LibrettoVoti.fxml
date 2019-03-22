@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.libretto.LibrettoController">
+   <top>
+      <Label text="Libretto Voti" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <VBox spacing="10.0">
+         <children>
+            <VBox style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <Label text="Esame" />
+                        <TextField fx:id="txtNomeCorso" promptText="Nome corso" />
+                        <ComboBox fx:id="boxPunteggio" promptText="Punteggio" />
+                        <DatePicker fx:id="dataEsame" editable="false" prefHeight="31.0" prefWidth="159.0" promptText="Data esame" />
+                     </children>
+                  </HBox>
+                  <ButtonBar prefHeight="40.0">
+                    <buttons>
+                      <Button mnemonicParsing="false" onAction="#handleCercaNome" text="Cerca per nome corso" />
+                        <Button layoutX="565.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleCercaPunteggio" text="Cerca per punteggio" />
+                        <Button defaultButton="true" layoutX="565.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleInserisci" text="Inserisci" />
+                    </buttons>
+                  </ButtonBar>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" />
+               </effect>
+            </VBox>
+            <HBox>
+               <children>
+                  <ListView fx:id="votiList" HBox.hgrow="ALWAYS">
+                     <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" />
+                     </effect>
+                  </ListView>
+                  <VBox>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleOrdinaEsame" prefHeight="31.0" prefWidth="172.0" text="Ordina per esame" />
+                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleOrdinaVoto" prefHeight="31.0" prefWidth="172.0" text="Ordina per voto" />
+                        <Button layoutX="10.0" layoutY="41.0" mnemonicParsing="false" onAction="#handleMiglioraLibretto" prefHeight="31.0" prefWidth="172.0" text="Migliora libretto">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleCancella24" prefHeight="31.0" prefWidth="172.0" text="Cancella &lt;24" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

@@ -1,14 +1,20 @@
-package it.polito.tdp.libretto;
+package it.polito.tdp.libretto.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Libretto {
 
-	private List<Voto> voti;
+//	private List<Voto> voti;
+	private ListProperty<Voto> voti ;
 
 	public Libretto() {
-		this.voti = new ArrayList<Voto>();
+		this.voti = new SimpleListProperty<Voto>(FXCollections.observableArrayList());
 	}
 
 	/**
@@ -20,7 +26,7 @@ public class Libretto {
 	 */
 	public boolean add(Voto v) {
 		if (!this.esisteGiaVoto(v) && !this.votoConflitto(v)) {
-			voti.add(v);
+			this.getVoti().add(v);
 			return true;
 		} else {
 			return false;
@@ -36,7 +42,7 @@ public class Libretto {
 	public List<Voto> cercaVoti(int punti) {
 		List<Voto> result = new ArrayList<Voto>();
 
-		for (Voto v : this.voti) {
+		for (Voto v : this.getVoti()) {
 			if (v.getPunti() == punti) {
 				result.add(v);
 			}
@@ -52,11 +58,11 @@ public class Libretto {
 	 */
 	public Voto cercaEsame(String nomeEsame) {
 		Voto voto = new Voto(0, nomeEsame, null);
-		int pos = this.voti.indexOf(voto);
+		int pos = this.getVoti().indexOf(voto);
 		if (pos == -1)
 			return null;
 		else
-			return this.voti.get(pos);
+			return this.getVoti().get(pos);
 	}
 
 	/**
@@ -69,11 +75,11 @@ public class Libretto {
 	 *         voto diverso
 	 */
 	public boolean esisteGiaVoto(Voto v) {
-		int pos = this.voti.indexOf(v);
+		int pos = this.getVoti().indexOf(v);
 		if (pos == -1)
 			return false;
 		else
-			return (v.getPunti() == this.voti.get(pos).getPunti());
+			return (v.getPunti() == this.getVoti().get(pos).getPunti());
 	}
 
 	/**
@@ -87,15 +93,15 @@ public class Libretto {
 	 *         punteggio
 	 */
 	public boolean votoConflitto(Voto v) {
-		int pos = this.voti.indexOf(v);
+		int pos = this.getVoti().indexOf(v);
 		if (pos == -1)
 			return false;
 		else
-			return (v.getPunti() != this.voti.get(pos).getPunti());
+			return (v.getPunti() != this.getVoti().get(pos).getPunti());
 	}
 
 	public String toString() {
-		return this.voti.toString() ;
+		return this.getVoti().toString() ;
 	}
 	
 	/**
@@ -123,7 +129,7 @@ public class Libretto {
 	 */
 	public void cancellaVotiScarsi() {
 		List<Voto> cancellare = new ArrayList<Voto>() ;
-		for(Voto v: this.voti) {
+		for(Voto v: this.getVoti()) {
 			if(v.getPunti()<24) {
 				cancellare.add(v) ;
 			}
@@ -131,6 +137,13 @@ public class Libretto {
 		
 		// nota: non è possibile cancellare un voto dall'interno del ciclo for
 		// perché non si può modificare una Collection mentre si itera sulla stessa
-		this.voti.removeAll(cancellare) ;
+		this.getVoti().removeAll(cancellare) ;
+	}
+	
+	public ObservableList<Voto> getVoti() {
+		return this.voti.get();
+	}
+	public ListProperty<Voto> votiProperty() {
+		return this.voti;
 	}
 }

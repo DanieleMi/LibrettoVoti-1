@@ -1,4 +1,4 @@
-package it.polito.tdp.libretto;
+package it.polito.tdp.libretto.model;
 
 import java.time.LocalDate;
 import java.util.List;
